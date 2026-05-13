@@ -43,7 +43,7 @@ Function Definition
 
 # function definition
 index = function(species, total = sum(species)) {
-  # here's were I calculate power
+  # here's where I calculate Simpson's index
   result = sum((species/total)^2)
   return(result)
 }
@@ -69,6 +69,10 @@ test_data_s2 <- data.frame(
 site1 <- index(species = test_data_s1$individuals)
 
 site2 <- index(species = test_data_s2$individuals)
+
+site1
+
+site2
 
 
 ```
