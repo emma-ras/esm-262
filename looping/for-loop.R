@@ -142,3 +142,42 @@ num_social
 
 # other speeds are traveling is the remainder 
 num_traveling 
+
+################################################################################
+################################################################################
+# Lecture Tuesday May 12, 2026 
+
+# cat(sprintf()) echoes a string, prints it out 
+
+# count all the values in the matrix above threshold 
+#sum(matrix >= threshold)
+nobs = 4
+nloc = 5
+# matrix function in R lets you initialize with data 
+creatureobs = matrix(runif(nobs * nloc, min = 0, max =100), nrow = nloc) 
+# check to see that it is a matrix with rows and columns 
+str(creatureobs)
+
+
+hunt_speed = 60
+num_hunt_speeds = 0 # intialize for value
+
+#for (l in 1:length(creatureobs)) {
+#  thresh_hunt = ifelse(creatureobs[l,0] >= hunt_speed, 1, 0)
+#}
+
+# Initialize variables for the loop 
+pol_in = 10 
+pol_out_base = 5
+threshold = 100
+pollution_level = 0
+day = 0 
+maxday = 356
+while((pollution_level < threshold) && (day < maxday)) {
+  air_temp = rnorm(mean=20, sd=5, n=1)
+  pol_out = pol_out_base * (1+0.01*air_temp)
+  pollution_level = pollution_level + pol_in - pol_out
+  day = day + 1 
+}
+
+
