@@ -1,0 +1,46 @@
+---
+title: "3-assignment-esm-262"
+author: "Emma Rasmussen"
+format: html
+editor: visual
+---
+
+## Air Quality and For Loops
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Pt. 1 Build the dataset
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+
+airquality = data.frame(
+  day = 1:365,
+  season = ifelse(day <= 90, "winter",
+                ifelse(day <= 180, "spring",
+                ifelse(day <= 270, "summer", "fall" ))),
+  
+)
+  
+
+
+# matrix function in R lets you initialize with data
+# here we are creating a matrix with nlocation rows and nobs columns, filled with integers between 1 and 10
+
+airquality = matrix(sample())
+creatureobs = matrix(sample(1:10, ntime*nlocation, replace=TRUE), nrow=nlocation)
+colnames(creatureobs) = c("time1", "time2", "time3", "time4", "time5")
+rownames(creatureobs) = c("east", "west", "north")
+# check to see that it is a matrix with rows and columns
+str(creatureobs)
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).

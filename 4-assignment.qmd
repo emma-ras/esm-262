@@ -1,0 +1,74 @@
+---
+title: "4-assignment-esm-262"
+author: "Emma Rasmussen"
+format: html
+editor: visual
+---
+
+# Building your first function
+
+### Defining contract
+
+This function calculates Simpson's Index.
+
+*Input:* Number of individuals per species and total individuals of all species
+
+*Output:* Simpson's Index (D), value between 0 to 1
+
+The value represents the probability that 2 individuals randomly selected from a sample will be the same species.
+
+*Parameters:*
+
+species, the number of individuals per species
+
+total, the total of all individuals across species
+
+*Return:*
+
+index, the output of Simpson's
+
+*Function:* The function will be the sum of each individual species total ("species") divided by the total of all species ("total") squared.
+
+D = ∑((species /total)^2^
+
+```{r}
+#' @param species individuals per species
+#' @param total sum of all individuals across all species
+#' @return index (D)
+```
+
+Function Definition
+
+```{r}
+
+# function definition
+index = function(species, total = sum(species)) {
+  # here's were I calculate power
+  result = sum((species/total)^2)
+  return(result)
+}
+```
+
+Testing function with example data
+
+```{r}
+# generate test data frame
+test_data_s1 <- data_frame(
+  species_name = c("redleg","arroyo","yellowleg","catree","bajachorus","spadefoot","sierranchorus","bullfrog","catoad","torrent","newt","giantsal"),
+  individuals = sample(1:50, size = 12)
+)
+
+test_data_s2 <- data_frame(
+  species_name = c("redleg","arroyo","yellowleg","catree","bajachorus","spadefoot","sierranchorus","bullfrog","catoad","torrent","newt","giantsal"),
+  individuals = sample(0:20, size = 12)
+)
+
+
+# run data in function 
+
+site1 <- index(species = test_data_s1$individuals)
+
+site2 <- index(species = test_data_s2$individuals)
+
+
+```
