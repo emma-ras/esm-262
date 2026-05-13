@@ -53,12 +53,12 @@ index = function(species, total = sum(species)) {
 
 ```{r}
 # generate test data frame
-test_data_s1 <- data_frame(
+test_data_s1 <- data.frame(
   species_name = c("redleg","arroyo","yellowleg","catree","bajachorus","spadefoot","sierranchorus","bullfrog","catoad","torrent","newt","giantsal"),
   individuals = sample(1:50, size = 12)
 )
 
-test_data_s2 <- data_frame(
+test_data_s2 <- data.frame(
   species_name = c("redleg","arroyo","yellowleg","catree","bajachorus","spadefoot","sierranchorus","bullfrog","catoad","torrent","newt","giantsal"),
   individuals = sample(0:20, size = 12)
 )
