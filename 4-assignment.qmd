@@ -29,7 +29,7 @@ index, the output of Simpson's
 
 *Function:* The function will be the sum of each individual species total ("species") divided by the total of all species ("total") squared.
 
-D = ∑((species /total)^2^
+D = ∑((species /total)^2^ )
 
 ```{r}
 #' @param species individuals per species
@@ -49,7 +49,7 @@ index = function(species, total = sum(species)) {
 }
 ```
 
-Testing function with example data
+### Testing function with example data 
 
 ```{r}
 # generate test data frame
