@@ -38,6 +38,9 @@ D = ∑((species /total)^2^ )
 ```
 
 Function Definition
+Follow up notes from class: species = as.factor(species)
+
+summary(species)
 
 ```{r}
 
