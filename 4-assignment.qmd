@@ -37,45 +37,58 @@ D = ∑((species /total)^2^ )
 #' @return index (D)
 ```
 
-Function Definition
-Follow up notes from class: species = as.factor(species)
+Function Definition Follow up notes from class: species = as.factor(species)
 
 summary(species)
 
 ```{r}
 
 # function definition
-index = function(species, total = sum(species)) {
+index = function(species_name, individuals) {
+  total = sum(individuals)
   # here's where I calculate Simpson's index
-  result = sum((species/total)^2)
-  return(result)
+  result = 1 - sum((individuals/total)^2)
+  frequent <- which.max(individuals)
+  return(list(simpson = result, frequent = species_name[frequent], distinct = length(individuals))) 
 }
 ```
 
-### Testing function with example data 
+#return(result)
+
+### Testing function with example data
+
+ph_status \<- ifelse(ph \<= ph_min & ph \<= ph_max, "Safe", "Unsafe") do_status \<- ifelse(dissolved_oxygen \>= do_min, "Adequate", "Hypoxic") turbidity_status \<- ifelse(turbidity \<= turbidity_max, "clear", "turbid")
 
 ```{r}
 # generate test data frame
 test_data_s1 <- data.frame(
   species_name = c("redleg","arroyo","yellowleg","catree","bajachorus","spadefoot","sierranchorus","bullfrog","catoad","torrent","newt","giantsal"),
-  individuals = sample(1:50, size = 12)
+  individuals = sample(1:50, size = 12, replace = TRUE)
 )
 
+# low diversity
 test_data_s2 <- data.frame(
   species_name = c("redleg","arroyo","yellowleg","catree","bajachorus","spadefoot","sierranchorus","bullfrog","catoad","torrent","newt","giantsal"),
-  individuals = sample(0:20, size = 12)
+  individuals = sample(0:5, size = 12, prob = c(0.6, 0.1, 0.1, 0.1, 0.05, 0.05), replace = TRUE)
 )
 
 
 # run data in function 
 
-site1 <- index(species = test_data_s1$individuals)
+site1 <- index(species_name = test_data_s1$species_name,
+               individuals = test_data_s1$individuals)
 
-site2 <- index(species = test_data_s2$individuals)
+site2 <- index(species_name = test_data_s2$species_name,
+               individuals = test_data_s2$individuals)
 
 site1
 
 site2
+
+
+```
+
+```{r}
 
 
 ```

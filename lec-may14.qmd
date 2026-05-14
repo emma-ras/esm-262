@@ -1,0 +1,62 @@
+---
+title: "Lecture May 14"
+author: "Emma Rasmussen"
+format: html
+editor: visual
+---
+
+## Lists
+
+Uses a \$ to indicate what you're looking at but each column doesnt have to have the same number of things or the same type of data.
+
+Uses 2 square bracket \[\[\]\] to pull the number of the element, opposed to df\[\]
+
+Lists are agnostic about format easy to add and remove things.
+
+4 locations but only one sale, super flexible but have to think carefully about constructing them
+
+```{r}
+#make a list 
+sale = list(id=2, quality="high",
+            content= c("apple", "cherry"), cost=c(4,5))
+
+sale$content # is a vector, can index with a 2 to get second item in vector
+sale$content[2] 
+sale[[3]][2] # does the same thing but pulls the 3rd list and the second item 
+
+# add to the list 
+sale$location = c("farmers market", "grocery store", "orchard")
+sale$location = NULL # to remove from the list
+sale$amount = c(10,6)
+sale$profit = sale$cost*sale$amount
+
+minmax = function(x) {
+  max = max(x) 
+  min = min(x) 
+  return = list(min=min, max=max)
+}
+a=c(4,6,8,0)
+minmax(a)
+
+```
+
+Returning : a list is functionally "one thing", functions can only return one thing
+
+Function definitions should be in their own r script as a black box to avoid making a mess in working doc
+
+```{r}
+analyze_water_quality <- function(
+    ph, 
+    dissolved_oxygen, 
+    turbidity, 
+    ph_min = 6.5,
+    ph_max = 8.5,
+    do_min = 6.0,
+    turbidity_max = 4.0
+) {
+  ph_status <- ifelse(ph <= ph_min & ph <= ph_max, "Safe", "Unsafe")
+  do_status <- ifelse(dissolved_oxygen >= do_min, "Adequate", "Hypoxic")
+  turbidity_status <- ifelse(turbidity <= turbidity_max, "clear", "turbid")
+}
+
+```
