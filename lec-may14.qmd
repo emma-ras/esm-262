@@ -1,0 +1,39 @@
+---
+title: "Lecture May 14"
+author: "Emma Rasmussen"
+format: html
+editor: visual
+---
+
+## Lists
+
+Uses a \$ to indicate what you're looking at but each column doesnt have to have the same number of things or the same type of data.
+
+Uses 2 square bracket \[\[\]\] to pull the number of the element, opposed to df\[\]
+
+Lists are agnostic about format easy to add and remove things.
+
+4 locations but only one sale, super flexible but have to think carefully about constructing them
+
+```{r}
+#make a list 
+sale = list(id=2, quality="high",
+            content= c("apple", "cherry"), cost=c(4,5))
+
+sale$content # is a vector, can index with a 2 to get second item in vector
+sale$content[2] 
+sale[[3]][2] # does the same thing but pulls the 3rd list and the second item 
+
+# add to the list 
+sale$location = c("farmers market", "grocery store", "orchard")
+sale$location = NULL # to remove from the list
+```
+
+You can add options to executable code like this
+
+```{r}
+#| echo: false
+2 * 2
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
