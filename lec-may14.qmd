@@ -27,13 +27,36 @@ sale[[3]][2] # does the same thing but pulls the 3rd list and the second item
 # add to the list 
 sale$location = c("farmers market", "grocery store", "orchard")
 sale$location = NULL # to remove from the list
+sale$amount = c(10,6)
+sale$profit = sale$cost*sale$amount
+
+minmax = function(x) {
+  max = max(x) 
+  min = min(x) 
+  return = list(min=min, max=max)
+}
+a=c(4,6,8,0)
+minmax(a)
+
 ```
 
-You can add options to executable code like this
+Returning : a list is functionally "one thing", functions can only return one thing
+
+Function definitions should be in their own r script as a black box to avoid making a mess in working doc
 
 ```{r}
-#| echo: false
-2 * 2
-```
+analyze_water_quality <- function(
+    ph, 
+    dissolved_oxygen, 
+    turbidity, 
+    ph_min = 6.5,
+    ph_max = 8.5,
+    do_min = 6.0,
+    turbidity_max = 4.0
+) {
+  ph_status <- ifelse(ph <= ph_min & ph <= ph_max, "Safe", "Unsafe")
+  do_status <- ifelse(dissolved_oxygen >= do_min, "Adequate", "Hypoxic")
+  turbidity_status <- ifelse(turbidity <= turbidity_max, "clear", "turbid")
+}
 
-The `echo: false` option disables the printing of code (only output is displayed).
+```
