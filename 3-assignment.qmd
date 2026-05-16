@@ -142,4 +142,4 @@ annualrisk
 
 ```
 
-The annual PM2.5 readings indicate the majority of days across seasons fall in the moderate air quality category, with very few days across all seasons categorized as good air quality days. Spring say the highest amount of unhealthy days at 67 total days. However, Winter had the most consecutive unhealthy air quality days at 5 in a row. This area is a good venue for increased air quality regulation to increase total good days and reduce the amount of unhealthy days.
+The annual PM2.5 readings indicate the majority of days across seasons fall in the moderate air quality category, with very few days across all seasons categorized as good air quality days. Spring say the highest amount of unhealthy days at 67 total days. However, Summer had the most consecutive unhealthy air quality days at 4 in a row. This area is a good venue for increased air quality regulation to increase total good days and reduce the amount of unhealthy days.

@@ -57,8 +57,6 @@ index = function(species_name, individuals) {
 
 ### Testing function with example data
 
-ph_status \<- ifelse(ph \<= ph_min & ph \<= ph_max, "Safe", "Unsafe") do_status \<- ifelse(dissolved_oxygen \>= do_min, "Adequate", "Hypoxic") turbidity_status \<- ifelse(turbidity \<= turbidity_max, "clear", "turbid")
-
 ```{r}
 # generate test data frame
 test_data_s1 <- data.frame(
