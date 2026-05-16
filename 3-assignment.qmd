@@ -5,42 +5,141 @@ format: html
 editor: visual
 ---
 
-## Air Quality and For Loops
+# Air Quality and For Loops
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+```{r}
+# Load all necessary libraries 
+
+library(ggplot2)
+```
 
 ## Pt. 1 Build the dataset
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
-
 ```{r}
 
+day <- 1:365 
 airquality = data.frame(
-  day = 1:365,
+  day = day,
   season = ifelse(day <= 90, "winter",
                 ifelse(day <= 180, "spring",
                 ifelse(day <= 270, "summer", "fall" ))),
+  pm25 = rnorm(365, mean = 30 , sd = 10), 
+  risk = "NA"
   
 )
   
 
-
-# matrix function in R lets you initialize with data
-# here we are creating a matrix with nlocation rows and nobs columns, filled with integers between 1 and 10
-
-airquality = matrix(sample())
-creatureobs = matrix(sample(1:10, ntime*nlocation, replace=TRUE), nrow=nlocation)
-colnames(creatureobs) = c("time1", "time2", "time3", "time4", "time5")
-rownames(creatureobs) = c("east", "west", "north")
-# check to see that it is a matrix with rows and columns
-str(creatureobs)
 ```
 
-You can add options to executable code like this
+## Pt. 2 Classify Risk with a For Loop
+
+-   `"good"` — PM2.5 below 12 µg/m³
+
+-   `"moderate"` — PM2.5 between 12 and 35.4 µg/m³
+
+-   `"unhealthy"` — PM2.5 above 35.4 µg/m³
 
 ```{r}
-#| echo: false
-2 * 2
+airquality$consecutive <-  as.numeric(0) 
+
+for (i in 1:nrow(airquality)) { # loop each row in df
+  if (airquality$pm25[i] > 35.4 ) { # designates pm25 column for i values
+    airquality$risk[i] <- "unhealthy"  # add [i] to only fill in that cell not every row 
+ } else if (airquality$pm25[i] < 12.0) {
+    airquality$risk[i] <- "good"
+  } else {
+    airquality$risk [i] <- "moderate"
+  }
+  
+if(airquality$risk[i] == "unhealthy") {
+    if (i == 1) {
+      airquality$consecutive[i] <- 1
+    } else {
+      airquality$consecutive[i] <- airquality$consecutive[i-1] +1
+    } 
+  } else {
+      airquality$consecutive[i] <- 0 
+    }
+} 
+
+max_unhealthy_streak <- max(airquality$consecutive)
+
+sprintf("The maximum unhealthy days with PM2.5 over 35.4 µg/m³ is %d days.", max_unhealthy_streak)
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+## Pt. 3 Seasonal Summary 
+
+```{r}
+airquality$seasonal_max <- as.numeric(0) # initalize column 
+
+for (season in unique(airquality$season)) { # outer loop, reset per season
+  seasonal_max <- 0 
+for (i in 1:nrow(airquality)) { # loop each row in df
+  if(airquality$season[i] == season) { # outer loop to loop by season 
+    if (airquality$consecutive[i] > seasonal_max) {
+      seasonal_max <- airquality$consecutive[i]
+    }
+  }
+}
+  airquality$seasonal_max[airquality$season==season] <- seasonal_max
+}
+```
+
+## Pt. 4 Visualize and Report
+
+Time Series of PM2.5 across year,
+
+```{r}
+
+annualpm25 <- ggplot(data = airquality, mapping =  aes(x = day, y = pm25)) +
+                      geom_point(aes(color = season)) 
+                      labs(
+                        title = sprintf("Daily PM25 2025 Seasonal Variation with %d Consecutive Unhealthy Days", seasonal_max),
+                        x = "Day",
+                        y = "Particulate Matter 2.5 (µg/m³)",
+                      ) +
+                      theme_minimal() 
+annualpm25
+
+```
+
+-   Bar chart of risk category counts (7 points)
+
+```{r}
+# create max per season variable 
+winter_max <- max(airquality$seasonal_max[airquality$season == "winter"])
+spring_max <- max(airquality$seasonal_max[airquality$season == "spring"])
+summer_max <- max(airquality$seasonal_max[airquality$season == "summer"])
+fall_max   <- max(airquality$seasonal_max[airquality$season == "fall"])
+
+annualrisk <- ggplot(data = airquality, mapping =  aes(x = risk)) +
+                      geom_bar(aes(fill = season)) + 
+                      geom_text(stat = "count",                          
+                                aes(label = after_stat(count)),           
+                                vjust = -0.5,                             
+                                size = 4,                                 
+                                fontface = "bold") +   
+                      facet_wrap(~season, 
+                      labeller = labeller(season = c(
+               "winter" = sprintf("Winter PM2.5 with %d Consecutive Unhealthy Days",
+                                  winter_max),
+               "spring" = sprintf("Spring PM2.5 with %d Consecutive Unhealthy Days",
+                                  spring_max),
+               "summer" = sprintf("Summer PM2.5 with %d Consecutive Unhealthy Days",
+                                  summer_max),
+               "fall"   = sprintf("Fall PM2.5 with %d Consecutive Unhealthy Days",
+                                  fall_max)
+             ))) + 
+                      labs(
+                        title = "Seasonal PM25 Risk Levels",
+                        x = "Risk Category",
+                        y = "Number of Days",
+                      ) +
+                      theme_minimal() 
+annualrisk
+
+
+
+```
+
+The annual PM2.5 readings indicate the majority of days across seasons fall in the moderate air quality category, with very few days across all seasons categorized as good air quality days. Spring say the highest amount of unhealthy days at 67 total days. However, Winter had the most consecutive unhealthy air quality days at 5 in a row. This area is a good venue for increased air quality regulation to increase total good days and reduce the amount of unhealthy days.
