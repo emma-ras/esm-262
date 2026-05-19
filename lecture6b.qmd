@@ -30,11 +30,14 @@ classr
 
 ```
 
-You can add options to executable code like this
+Flow Control summarize_diversity2
 
 ```{r}
-#| echo: false
-2 * 2
+source(here("course-materials/R/summarize_diversity2.R")) # i dont have this 
+
+flowers = sample(c("rose","peony","daisy"), replace=T, prob = c(0.1, 0.8, 0.1),size=30)
+
+summarize_diversity(flowers, index="B")$simpson
 ```
 
 The `echo: false` option disables the printing of code (only output is displayed).
