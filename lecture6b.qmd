@@ -40,4 +40,56 @@ flowers = sample(c("rose","peony","daisy"), replace=T, prob = c(0.1, 0.8, 0.1),s
 summarize_diversity(flowers, index="B")$simpson
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+Ifelse good for short simple conditions,
+
+complex: if {} else{}
+
+but multiple conditions:
+
+use case_when (requires tidyverse) or switch
+
+case_when uses \~ to indicate condition
+
+```{r}
+library(tidyverse)
+a = runif(min = 1, max = 60, n=5)
+classr = ifelse((a>10), ifelse(a>50, "high", "med"), "low")
+classr
+
+
+# using case_when
+case_when((fish == "steelhead") ~ "A", (fish == "tuna")~ "B", !(fish == "steelhead") & !(fish == "tuna") ~ "C")
+
+#make a function with case_when
+classify_fish = function(fish) {
+  class = case_when((fish == "steelhead") ~ "A", (fish == "tuna")~ "B", !(fish == "steelhead") & !(fish == "tuna") ~ "C") 
+  return(class) }
+
+ classify_fish("tuna")
+
+
+```
+
+Design a function
+
+Inputs:
+
+-   nutrient concentration (\@ least 5 days)
+
+-   temperature for at least 5 days
+
+-   thresholds for temperature and nutrient (with default values)
+
+Outputs:
+
+-   mean nutrient concentration
+
+-   pollution risk as "low", "med" or "high"
+
+<!-- -->
+
+-   
+
+```{r}
+
+```
