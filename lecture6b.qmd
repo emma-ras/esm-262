@@ -33,7 +33,8 @@ classr
 Flow Control summarize_diversity2
 
 ```{r}
-source(here("course-materials/R/summarize_diversity2.R")) # i dont have this 
+library(here)
+source(here("esm-262/summarize_diversity2.R")) # i dont have this 
 
 flowers = sample(c("rose","peony","daisy"), replace=T, prob = c(0.1, 0.8, 0.1),size=30)
 
@@ -86,10 +87,45 @@ Outputs:
 
 -   pollution risk as "low", "med" or "high"
 
-<!-- -->
-
--   
-
 ```{r}
+library(here)
+here("esm-262/classify_lake.R")
 
+# generate some data to try the function
+temperature = runif(min=4, max=35, n=30)
+nutrient = runif(min=5, max=40, n=30)
+
+# try it
+res=classify_lake(temperature=temperature, nutrient=nutrient)
+
+# lets pick some numbers we know should give us a low value
+nutrient = runif(min=0, max=5, n=30)
+classify_lake(temperature=temperature, nutrient=nutrient)
+
+
+# now try high
+# use repeat to generate the same value multiple times
+nutrient = rep(50, times=30)
+temperature = rep(25, times=30)
+classify_lake(temperature=temperature, nutrient=nutrient)
+
+##### Error checking 
+power_gen = function(height, flow, rho=1000, g=9.8, Keff=0.8) {
+  # make sure inputs are positive and if not set as NA so result will be NA
+   if (height < 0) height=NA
+  
+ # an alterative is to exit the function prematurely 
+  if (flow < 0) return("Flow cannot be less than 0")
+  #    return("Height cannot be less than 0")
+      
+  # calculate power
+    result = rho * height * flow * g * Keff
+  return(result)
+}
+
+#power_gen(2,3)
+#power_gen(-2,3)
+power_gen(2,-3)
 ```
+
+Error Checking: what will function do
