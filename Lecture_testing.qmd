@@ -73,3 +73,36 @@ compute_NPV = function(value, time, discount) {
 }
 expect_equal(compute_NPV(value=0, time=10, discount=0.01),0)
 ```
+
+Could write a test with input value
+
+Example using the summary function
+
+```{r}
+# generate some test data
+testdata = rnorm(mean=25, sd=3, n=100)
+summary(testdata)
+
+# it is actually returning a named vector — what are the names?
+names(summary(testdata))
+
+# now we can access specific elements
+summary(testdata)["Max."]
+
+# and use in a test to make sure this function works
+# the max should be greater than the min, right?
+
+expect_true((summary(testdata)["Max."] - summary(testdata)["Min."]) > 0)
+
+
+
+```
+
+Quick Check Quiz
+
+```{r}
+# 
+summary(testdata)["Mean"]
+expect_true(summary(testdata)["Mean"] > 24 & summary(testdata)["Mean"] < 26)
+
+```
