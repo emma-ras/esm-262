@@ -13,12 +13,18 @@ git revert HEAD
 
 -   tracks where you are and takes your repository back one commit
 
+:wq
+
+-   Adds commit messager through a text editor
+
+-   save is :wq
+
 ## Running Code
 
 When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
 
 ```{r}
-1 + 1
+2 + 2
 ```
 
 You can add options to executable code like this
