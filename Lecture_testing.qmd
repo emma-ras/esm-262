@@ -22,8 +22,54 @@ library(devtools)
 
 Testthat package
 
+Functions expect_XXXXX(input) examples:
+
+expect_true(condition)
+
+expect_equal(value, value)
+
 ```{r}
+
+# matches 
+fish1= "salmon"
+fish2= "trout"
+expect_match(fish1,fish2) # not a match error message 
+
+# length
+a = seq(from=1, to=10)
+expect_length(a, 100) # gives error & actual length 
 
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+Practice with NPV
+
+```{r}
+library(here)
+
+
+compute_NPV = function(value, time, discount) {
+  result = value / (1 + discount)**time
+  return(result)
+}
+compute_NPV
+
+#source(here("esm-262/compute_NPV.R"))
+futurevalue = 0
+expect_equal(compute_NPV(value=futurevalue, time=10, discount=0.01),0)
+futurevalue = 100
+expect_true(compute_NPV(value=futurevalue, time=10, discount=0.01) > 0)
+futurevalue = -100
+expect_true(compute_NPV(value=futurevalue, time=10, discount=0.01) < 0)
+
+```
+
+```{r}
+
+# lets introduce a bug in the function to see how tests catch it
+compute_NPV = function(value, time, discount) {
+  # use value to compute NPV
+  result = value - (1 + discount)**time
+  return(result)
+}
+expect_equal(compute_NPV(value=0, time=10, discount=0.01),0)
+```
