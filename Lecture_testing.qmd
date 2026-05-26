@@ -106,3 +106,37 @@ summary(testdata)["Mean"]
 expect_true(summary(testdata)["Mean"] > 24 & summary(testdata)["Mean"] < 26)
 
 ```
+
+```{r}
+
+effective_rain = function(rain, interceptC=1){
+  totalrain = sum(rain)
+  raineff = rain - interceptC
+  totalraineff = sum(raineff)
+  return(list(totalrain = totalrain, totalraineff= totalraineff))
+}
+# simple tests
+# if it never rains for 730 days, both totalrain and totalraineff should be zero
+raindata = rep(0, times= 730)
+expect_equal(effective_rain(raindata)$totalrain, 0)
+# so far so good, now for effective rainfall
+# should subtract intercept on days when 0, flaw in thinking not code 
+
+effective_rain=function(rain, interceptC=1) {
+    
+  # easy part - get total rain
+  totalrain = sum(rain)
+  
+  # interception happens every day so we need to apply it per day
+  # pmax ensures effective rain can't go below zero
+  raineff = rain-interceptC
+  raineff = pmax(raineff,0)
+  totalraineff = sum(raineff)
+  
+  return(list(totalrain=totalrain, totalraineff=totalraineff))}
+
+raindata = rep(0, times=730)
+expect_that(effective_rain(raindata)$totalraineff, equals(0)) # same as below 
+#expect_equal(effective_rain(raindata)$totalrain, 0)
+
+```
