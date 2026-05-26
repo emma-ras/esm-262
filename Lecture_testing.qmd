@@ -1,0 +1,29 @@
+---
+title: "Lecture_Testing"
+author: "Emma Rasmussen"
+format: html
+editor: visual
+---
+
+## Lecture Testing May 26, 2026
+
+Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+
+## Install Package
+
+When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+
+```{r}
+#install.packages("testthat")
+library(testthat)
+library(tidyverse)
+library(devtools)
+```
+
+Testthat package
+
+```{r}
+
+```
+
+The `echo: false` option disables the printing of code (only output is displayed).
