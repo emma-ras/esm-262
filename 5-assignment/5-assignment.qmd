@@ -3,3 +3,56 @@ title: "5-assignment"
 format: html
 ---
 
+Solar Project Valuation
+
+Planning
+
+```{r, echo=FALSE}
+library(here)
+knitr::include_graphics(here("5-assignment","flowchart.jpg"))
+```
+
+Contract 
+Module 1: Calculate expected annual revenue 
+Input: 
+Historical hourly locational marginal price (LMP) of nearest node rates for previous years ($/kWh)
+ Hourly power generation (kW) estimate for the latitude and longitude of selected site 
+Function:
+annual_rev = Sum(hourly kW * ($/KW) [use For loop to sum (8760 values)]
+Output: 
+Annual revenue estimate in $/year
+
+Module 2: Discount Revenue over 25 years. 
+Input: 
+Module 1 output (annual_rev)
+y(year) loop for 25 years 
+Parameters:
+r (Discount Rate)
+Function:
+Dis_rev = annual_rev/ (1 + r) ^ y 
+Output: dis_rev, discounted revenue as single $ value for 25 year project 
+
+Module 3: Discount Operations and Maintenance Costs
+Input: 
+om (System operations and maintenance cost ($/kw/yr) )
+Parameters:
+r (Discount Rate)
+Function: 
+Om_y1 = size * om 
+cost = om_y1/(1+r)^y
+
+
+Module 4: Estimate Net System Costs
+Input: 
+Module 2 Output 
+Module 3 Output
+invest_cost (System Construction Cost in year 0 ($/kw))
+y(year) loop for 25 years 
+Parameters: 
+***potentially adding a subsidy here if have time 
+Function: 
+Net_npv = invest_cost + cost + dis_rev)
+
+Final Output: Net present value of the project over 25 years (single $ value) 
+
+
