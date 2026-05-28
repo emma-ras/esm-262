@@ -1,6 +1,6 @@
 # annual_rev = Sum(hourly kW * ($/KW) [use For loop to sum (8760 values)]
-# lmp = locational marginal price for nearest nodes
-# kwh = estimated hourly production of energy 
+# lmp = locational marginal price for nearest nodes ($/kw)
+# kwh = estimated hourly production of energy (kwh)
 
 annual_rev <- function(lmp, kwh) {
  stopifnot(length(lmp) == 8760, length(kwh) == 8760) # check for full data annual data 

@@ -1,4 +1,4 @@
-
+# Discount operations and maintenance costs over project life span
 # size, system size (kW) 
 # om, estimated operations and maintenance ($/kW/year)
 # time in the future that cost/value occurs (years)
