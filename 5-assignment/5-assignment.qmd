@@ -104,6 +104,7 @@ Overall contract:
 # Load Data 
 solardf <- read.csv("solardata.csv")
 library(tidyverse)
+library(here)
 # Clean Data
 solardf_clean <- solardf |> 
   rename(time = Time.stamp, lmp = Dollar.per.kwh, kwh = System.power.generated..kW.)
@@ -123,18 +124,21 @@ params <- list(
 #### Module 1 Call
 
 ```{r}
+source(here("5-assignment/1_module.R"))
 annual_rev_result <- annual_rev(solardf_clean$lmp, solardf_clean$kwh)
 ```
 
 #### Module 2 Call
 
 ```{r}
+source(here("5-assignment/2_module.R"))
 dis_rev_result <- dis_rev(annual_rev_result, params$year, params$rate )
 ```
 
 #### Module 3 Call
 
 ```{r}
+source(here("5-assignment/3_module.R"))
 dis_om_result <- dis_om (params$om, params$size, params$year , params$rate)
 
 ```
@@ -142,7 +146,7 @@ dis_om_result <- dis_om (params$om, params$size, params$year , params$rate)
 #### Module 4 Call
 
 ```{r}
-
+source(here("5-assignment/4_module.R"))
 project_npv <- net_npv(params$construction, params$size)
 
 ```
