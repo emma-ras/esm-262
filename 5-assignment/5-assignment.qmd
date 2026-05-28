@@ -103,7 +103,7 @@ Overall contract:
 ```{r}
 # Load Data 
 solardf <- read.csv("solardata.csv")
-
+library(tidyverse)
 # Clean Data
 solardf_clean <- solardf |> 
   rename(time = Time.stamp, lmp = Dollar.per.kwh, kwh = System.power.generated..kW.)
