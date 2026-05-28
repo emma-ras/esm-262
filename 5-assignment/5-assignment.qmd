@@ -12,54 +12,97 @@ library(here)
 knitr::include_graphics(here("5-assignment","flowchart.jpg"))
 ```
 
-### Contract 
+### Module Contract
 
-#### Module 1: Calculate expected annual revenue 
+#### Module 1: Calculate expected annual revenue
 
 *Input:*
 
--   Historical hourly locational marginal price (LMP) of nearest node rates for previous years ($/kWh)
+-   Historical hourly locational marginal price (LMP) of nearest node rates for previous year (\$/kWh)
 
--   Hourly power generation (kW) estimate for the latitude and longitude of selected site
+-   Hourly power generation (kW) estimate for the latitude and longitude of selected site from SAM
 
 *Function*: annual_rev = Sum(hourly kW \* (\$/KW) \[use For loop to sum (8760 values)\]
 
 *Output:* Annual revenue estimate in \$/year
 
-#### Module 2: Discount Revenue over 25 years. 
+#### Module 2: Discount Revenue over 25 years.
 
 *Input:*
 
--   Module 1 output (annual_rev)
-
--   y(year) loop for 25 years
+-   Module 1 output (annual_rev_result)
 
 *Parameters:*
 
--   r (Discount Rate)
+-   rate (Discount Rate)
+-   year
 
-*Function:* Dis_rev = annual_rev/ (1 + r) \^ y
+*Function:* dis_rev = annual_rev/ (1 + rate) \^ year
 
 *Output:* dis_rev, discounted revenue as single \$ value for 25 year project
 
-#### Module 3: Discount Operations and Maintenance Costs 
+#### Module 3: Discount Operations and Maintenance Costs
 
 *Input:* om (System operations and maintenance cost (\$/kw/yr) )
 
 *Parameters:* r (Discount Rate)
 
-*Function:* Om_y1 = size \* om cost = om_y1/(1+r)\^y
+*Function:* dis_om= (size \* om)/(1+rate)\^year
 
-#### Module 4: Estimate Net System Costs 
+#### Module 4: Estimate Net System Costs
 
-*Input:* Module 2 Output Module 3 Output invest_cost (System Construction Cost in year 0 (\$/kw)) y(year) loop for 25 years
+*Input:*
 
-*Parameters:* \*\*\*potentially adding a subsidy here if have time Function: Net_npv = invest_cost + cost + dis_rev)
+-   Module 2 Output
 
-*Final Output:* Net present value of the project over 25 years (single \$ value)
+-   Module 3 Output
+
+-   Construction (System Construction Cost in year 0 (\$/kw))
+
+*Parameters:*
+
+-   Year loop for project duration
+
+\*\*\*potentially adding a subsidy here if have time Function: Net_npv = invest_cost + cost + dis_rev)
+
+*Final Output:* Net present value of the project over total project years (single \$ value)
+
+## Calling functions
 
 ```{r}
 # Load Data 
 solardf <- read.csv("solardata.csv")
+
+# Clean Data
+solardf_clean <- solardf |> 
+  rename(time = Time.stamp, lmp = Dollar.per.kwh, kwh = System.power.generated..kW.)
 ```
 
+#### Module 1 Call
+
+```{r}
+annual_rev_result <- annual_rev(solardf_clean$lmp, solardf_clean$kwh)
+```
+
+#### Module 2 Call
+
+```{r}
+dis_rev_result <- dis_rev(annual_rev_result, year = 25, rate = 0.05 )
+```
+
+#### Module 3 Call
+
+```{r}
+dis_om_result <- dis_om (om = 20.39, size = 100000, year = 25 , rate = 0.05)
+
+```
+
+#### Module 4 Call
+
+```{r}
+
+net_npv(1432, 100000)
+
+```
+
+####  

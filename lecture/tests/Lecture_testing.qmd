@@ -140,3 +140,93 @@ expect_that(effective_rain(raindata)$totalraineff, equals(0)) # same as below
 #expect_equal(effective_rain(raindata)$totalrain, 0)
 
 ```
+
+NPV testing Lecture Thursday 5/28/2026
+
+```{r}
+source(here("lecture/tests/compute_NPV.R"))
+# if profit is 0, NPV should be 0
+# if time is 0, NPV should equal the original value
+
+# now lets write the test that combines several expectations
+test_that("compute_NPV_works", {
+
+expect_equal(compute_NPV(value=0,time=100,discount=0.1), 0)
+expect_equal(compute_NPV(value=100, time=0, discount=0.1), 100)
+})
+
+# now lets add a test that checks that NPV is higher for a shorter time period
+test_that("compute_NPV_time_works", {
+testdata = c(2, 4)
+short = compute_NPV(100, time=testdata[1], 0.01)
+long = compute_NPV(100, time = testdata[2], 0.01)
+expect_true(short > long)
+})
+
+```
+
+Using Test Directory
+
+```{r}
+# source original function
+source(here("esm262/lecture/tests/compute_NPV.R"))
+# run tests in a file
+test_file(here("esm262/lecture/tests/test_compute_NPV.R"))
+
+# now try  version with error checking
+source(here("course-materials/R/compute_NPV_witherror.R"))
+test_file(here("course-materials/tests/test_compute_NPV.R"))
+```
+
+Test Example: Spring Temperatures from climate data
+
+Input: year/month/ average temp (tavg)
+
+optional parameters: spring
+
+```{r}
+# source function
+source(here("lecture/tests/spring_summary.R"))
+spring_summary
+```
+
+Create test data
+
+```{r}
+# to test this function we need to create some data, we can
+# add days and precip even though function doesn't use them to make sure it doesn't
+# mess up the function
+clim_data = as.data.frame(cbind(month=c(1:4), day=rep(1, times=4), year=c(2000,2000,2001,2001), 
+                                 precip=rep(0, times=4), tavg=c(2,2,2,4)))
+spring_summary(clim_data)
+```
+
+Run Function
+
+```{r}
+spring_summary(clim_data, spring_months=c(1,4))
+```
+
+Test Function
+
+```{r}
+# we can embed data directly in a test
+# save this to a file called test_spring_summary.R
+test_that("spring_summary_works" ,
+{clim_data = as.data.frame(cbind(month=c(1:4), day=rep(1, times=4), year=c(2000,2000,2001,2001), 
+                                 precip=rep(0, times=4), tavg=c(2,2,2,4)))
+expect_equal(spring_summary(clim_data, spring_months=4)$Tavg_spring, 4)
+expect_equal(spring_summary(clim_data, spring_months=2)$Tavg_spring, 2)
+expect_equal(spring_summary(clim_data, spring_months=c(1:4))$warmest_spring, 2001)
+
+})
+```
+
+Test if one of the columns in missing
+
+```{r}
+
+expect_message(spring_summary(clim_data = c(7))) #if it finds an error it is true not message
+
+
+```
