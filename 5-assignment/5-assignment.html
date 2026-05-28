@@ -6,6 +6,7 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Emma Rasmussen">
 
 <title>5-assignment</title>
 <style>
@@ -19,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -35,35 +71,6 @@ ul.task-list li input[type="checkbox"] {
 <link href="5-assignment_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="5-assignment_files/libs/bootstrap/bootstrap-81267100e462c21b3d6c0d5bf76a3417.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 </head>
 
@@ -82,6 +89,12 @@ window.Quarto = {
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Emma Rasmussen </p>
+          </div>
+  </div>
     
   
     
@@ -92,12 +105,11 @@ window.Quarto = {
 </header>
 
 
-<p>Solar Project Valuation</p>
-<p>Planning</p>
+<section id="solar-project-valuation" class="level1">
+<h1>Solar Project Valuation</h1>
+<section id="planning" class="level2">
+<h2 class="anchored" data-anchor-id="planning">Planning</h2>
 <div class="cell">
-<div class="cell-output cell-output-stderr">
-<pre><code>here() starts at /Users/emmarasmussen/Documents/R Studio/esm-262</code></pre>
-</div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -106,14 +118,146 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>Contract Module 1: Calculate expected annual revenue Input: Historical hourly locational marginal price (LMP) of nearest node rates for previous years (<span class="math inline">\(/kWh)
-Hourly power generation (kW) estimate for the latitude and longitude of selected site
-Function:
-annual_rev = Sum(hourly kW * (\)</span>/KW) [use For loop to sum (8760 values)] Output: Annual revenue estimate in $/year</p>
-<p>Module 2: Discount Revenue over 25 years. Input: Module 1 output (annual_rev) y(year) loop for 25 years Parameters: r (Discount Rate) Function: Dis_rev = annual_rev/ (1 + r) ^ y Output: dis_rev, discounted revenue as single $ value for 25 year project</p>
-<p>Module 3: Discount Operations and Maintenance Costs Input: om (System operations and maintenance cost ($/kw/yr) ) Parameters: r (Discount Rate) Function: Om_y1 = size * om cost = om_y1/(1+r)^y</p>
-<p>Module 4: Estimate Net System Costs Input: Module 2 Output Module 3 Output invest_cost (System Construction Cost in year 0 ($/kw)) y(year) loop for 25 years Parameters: ***potentially adding a subsidy here if have time Function: Net_npv = invest_cost + cost + dis_rev)</p>
-<p>Final Output: Net present value of the project over 25 years (single $ value)</p>
+<section id="module-contract" class="level3">
+<h3 class="anchored" data-anchor-id="module-contract">Module Contract</h3>
+<p>Overall contract:</p>
+<p><em>Input:</em></p>
+<ul>
+<li><p>year, total years for project valuation</p></li>
+<li><p>rate, discount rate</p></li>
+<li><p>size, project size (kw)</p></li>
+<li><p>om, operations and maintenance costs ($/kw/yr)</p></li>
+<li><p>construction, year 0 costs to build ($/kw)</p></li>
+</ul>
+<p><em>Function:</em></p>
+<ul>
+<li><p>Module 1: Calculate expected annual revenue</p></li>
+<li><p>Module 2: Discount revenue over project lifespan in years</p></li>
+<li><p>Module 3: Discount operations and maintenance costs</p></li>
+<li><p>Module 4: Sum all costs and revenue for total project value</p></li>
+</ul>
+<p><em>Final Output:</em> Net present value of the project over total project years (single $ value)</p>
+<section id="module-1-calculate-expected-annual-revenue" class="level4">
+<h4 class="anchored" data-anchor-id="module-1-calculate-expected-annual-revenue">Module 1: Calculate expected annual revenue</h4>
+<p><em>Input:</em></p>
+<ul>
+<li><p>Historical hourly locational marginal price (LMP) of nearest node rates for previous year ($/kWh)</p></li>
+<li><p>Hourly power generation (kW) estimate for the latitude and longitude of selected site from SAM</p></li>
+</ul>
+<p><em>Function</em>: annual_rev = Sum(hourly kW * ($/KW) [use For loop to sum (8760 values)]</p>
+<p><em>Output:</em> Annual revenue estimate in $/year</p>
+</section>
+<section id="module-2-discount-revenue-over-project-lifespan-years" class="level4">
+<h4 class="anchored" data-anchor-id="module-2-discount-revenue-over-project-lifespan-years">Module 2: Discount Revenue over project lifespan (years)</h4>
+<p><em>Input:</em></p>
+<ul>
+<li>Module 1 output (annual_rev_result)</li>
+</ul>
+<p><em>Parameters:</em></p>
+<ul>
+<li>rate (Discount Rate)</li>
+<li>year</li>
+</ul>
+<p><em>Function:</em> dis_rev = annual_rev/ (1 + rate) ^ year</p>
+<p><em>Output:</em> dis_rev, discounted revenue as single $ value across project timeline</p>
+</section>
+<section id="module-3-discount-operations-and-maintenance-costs" class="level4">
+<h4 class="anchored" data-anchor-id="module-3-discount-operations-and-maintenance-costs">Module 3: Discount Operations and Maintenance Costs</h4>
+<p><em>Input:</em></p>
+<ul>
+<li>om (System operations and maintenance cost ($/kw/yr) )</li>
+</ul>
+<p><em>Parameters:</em></p>
+<ul>
+<li><p>rate (Discount Rate)</p></li>
+<li><p>year</p></li>
+</ul>
+<p><em>Function:</em> dis_om= (size * om)/(1+rate)^year</p>
+<p><em>Output:</em> dis_om_result, discounted operations and maintenance cost as single $ value across project timeline</p>
+</section>
+<section id="module-4-estimate-net-system-costs" class="level4">
+<h4 class="anchored" data-anchor-id="module-4-estimate-net-system-costs">Module 4: Estimate Net System Costs</h4>
+<p><em>Input:</em></p>
+<ul>
+<li><p>Module 2 Output: dis_rev_result</p></li>
+<li><p>Module 3 Output: dis_om_result</p></li>
+<li><p>Construction (System Construction Cost in year 0 ($/kw))</p></li>
+</ul>
+<p><em>Function:</em> net_npv = dis_rev_result - construction - dis_om_result</p>
+<p><em>Final Output:</em> Net present value of the project over total project years (single $ value)</p>
+</section>
+</section>
+</section>
+<section id="calling-functions" class="level2">
+<h2 class="anchored" data-anchor-id="calling-functions">Calling functions</h2>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load Data </span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>solardf <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"solardata.csv"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Clean Data</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>solardf_clean <span class="ot">&lt;-</span> solardf <span class="sc">|&gt;</span> </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">rename</span>(<span class="at">time =</span> Time.stamp, <span class="at">lmp =</span> Dollar.per.kwh, <span class="at">kwh =</span> System.power.generated..kW.)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Project Parameters </span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>params <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">year =</span> <span class="dv">25</span>, </span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">rate =</span> <span class="fl">0.05</span>, </span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">size =</span> <span class="dv">100000</span>,</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">om =</span> <span class="fl">20.39</span>, </span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">construction =</span> <span class="dv">1432</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<section id="module-1-call" class="level4">
+<h4 class="anchored" data-anchor-id="module-1-call">Module 1 Call</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">here</span>(<span class="st">"5-assignment/1_module.R"</span>))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>annual_rev_result <span class="ot">&lt;-</span> <span class="fu">annual_rev</span>(solardf_clean<span class="sc">$</span>lmp, solardf_clean<span class="sc">$</span>kwh)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>annual_rev_result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 7587896</code></pre>
+</div>
+</div>
+</section>
+<section id="module-2-call" class="level4">
+<h4 class="anchored" data-anchor-id="module-2-call">Module 2 Call</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">here</span>(<span class="st">"5-assignment/2_module.R"</span>))</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>dis_rev_result <span class="ot">&lt;-</span> <span class="fu">dis_rev</span>(annual_rev_result, params<span class="sc">$</span>year, params<span class="sc">$</span>rate)</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>dis_rev_result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 106943379</code></pre>
+</div>
+</div>
+</section>
+<section id="module-3-call" class="level4">
+<h4 class="anchored" data-anchor-id="module-3-call">Module 3 Call</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">here</span>(<span class="st">"5-assignment/3_module.R"</span>))</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>dis_om_result <span class="ot">&lt;-</span> <span class="fu">dis_om</span> (params<span class="sc">$</span>om, params<span class="sc">$</span>size, params<span class="sc">$</span>year , params<span class="sc">$</span>rate)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>dis_om_result</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 28737553</code></pre>
+</div>
+</div>
+</section>
+<section id="module-4-call" class="level4">
+<h4 class="anchored" data-anchor-id="module-4-call">Module 4 Call</h4>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">source</span>(<span class="fu">here</span>(<span class="st">"5-assignment/4_module.R"</span>))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>project_npv <span class="ot">&lt;-</span> <span class="fu">net_npv</span>(params<span class="sc">$</span>construction, params<span class="sc">$</span>size)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>project_npv</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] -64994174</code></pre>
+</div>
+</div>
+</section>
+<section id="section" class="level4">
+<h4 class="anchored" data-anchor-id="section"></h4>
+</section>
+</section>
+</section>
 
 </main>
 <!-- /main column -->

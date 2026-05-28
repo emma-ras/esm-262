@@ -8,7 +8,7 @@ author: Emma Rasmussen
 
 ## Planning
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, message=FALSE, warning=FALSE}
 library(here)
 knitr::include_graphics(here("5-assignment","flowchart.jpg"))
 ```
@@ -100,11 +100,11 @@ Overall contract:
 
 ## Calling functions
 
-```{r}
+```{r, message=FALSE, warning=FALSE}
 # Load Data 
 solardf <- read.csv("solardata.csv")
 library(tidyverse)
-library(here)
+
 # Clean Data
 solardf_clean <- solardf |> 
   rename(time = Time.stamp, lmp = Dollar.per.kwh, kwh = System.power.generated..kW.)
@@ -126,13 +126,15 @@ params <- list(
 ```{r}
 source(here("5-assignment/1_module.R"))
 annual_rev_result <- annual_rev(solardf_clean$lmp, solardf_clean$kwh)
+annual_rev_result
 ```
 
 #### Module 2 Call
 
 ```{r}
 source(here("5-assignment/2_module.R"))
-dis_rev_result <- dis_rev(annual_rev_result, params$year, params$rate )
+dis_rev_result <- dis_rev(annual_rev_result, params$year, params$rate)
+dis_rev_result
 ```
 
 #### Module 3 Call
@@ -140,6 +142,7 @@ dis_rev_result <- dis_rev(annual_rev_result, params$year, params$rate )
 ```{r}
 source(here("5-assignment/3_module.R"))
 dis_om_result <- dis_om (params$om, params$size, params$year , params$rate)
+dis_om_result
 
 ```
 
@@ -148,6 +151,7 @@ dis_om_result <- dis_om (params$om, params$size, params$year , params$rate)
 ```{r}
 source(here("5-assignment/4_module.R"))
 project_npv <- net_npv(params$construction, params$size)
+project_npv
 
 ```
 
