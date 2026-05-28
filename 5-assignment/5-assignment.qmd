@@ -1,6 +1,7 @@
 ---
 title: "5-assignment"
 format: html
+author: Emma Rasmussen
 ---
 
 # Solar Project Valuation
@@ -14,6 +15,32 @@ knitr::include_graphics(here("5-assignment","flowchart.jpg"))
 
 ### Module Contract
 
+Overall contract:
+
+*Input:*
+
+-   year, total years for project valuation
+
+-   rate, discount rate
+
+-   size, project size (kw)
+
+-   om, operations and maintenance costs (\$/kw/yr)
+
+-   construction, year 0 costs to build (\$/kw)
+
+*Function:*
+
+-   Module 1: Calculate expected annual revenue
+
+-   Module 2: Discount revenue over project lifespan in years
+
+-   Module 3: Discount operations and maintenance costs
+
+-   Module 4: Sum all costs and revenue for total project value
+
+*Final Output:* Net present value of the project over total project years (single \$ value)
+
 #### Module 1: Calculate expected annual revenue
 
 *Input:*
@@ -26,7 +53,7 @@ knitr::include_graphics(here("5-assignment","flowchart.jpg"))
 
 *Output:* Annual revenue estimate in \$/year
 
-#### Module 2: Discount Revenue over 25 years.
+#### Module 2: Discount Revenue over project lifespan (years)
 
 *Input:*
 
@@ -51,6 +78,8 @@ knitr::include_graphics(here("5-assignment","flowchart.jpg"))
 
 -   rate (Discount Rate)
 
+-   year
+
 *Function:* dis_om= (size \* om)/(1+rate)\^year
 
 *Output:* dis_om_result, discounted operations and maintenance cost as single \$ value across project timeline
@@ -64,10 +93,6 @@ knitr::include_graphics(here("5-assignment","flowchart.jpg"))
 -   Module 3 Output: dis_om_result
 
 -   Construction (System Construction Cost in year 0 (\$/kw))
-
-*Parameters:*
-
--   Year loop for project duration
 
 *Function:* net_npv = dis_rev_result - construction - dis_om_result
 
