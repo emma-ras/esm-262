@@ -162,9 +162,6 @@ Testing functions
 ```{r}
 test_dir("solarvalue_test") # files must start with test
 
-# Module 3
-
-# Module 4
 
 ```
 
@@ -172,14 +169,8 @@ test_dir("solarvalue_test") # files must start with test
 
 ```{r}
 library(devtools)
-install_github("emma-ras/solarvalue")
+install_github("emma-ras/solarvalue") #testing documentation saved in package version
 library(solarvalue)
 help(annual_rev)
-
-```
-
-## Example use
-
-```{r}
 
 ```
