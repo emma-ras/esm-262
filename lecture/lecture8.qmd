@@ -1,0 +1,49 @@
+---
+title: "lecture8"
+format: html
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+# R Documentation 
+
+Use either package:
+
+roxygenize()
+
+devtools()
+
+Description Tagged (using special "key" words)
+
+Common examples: @param input/parameter description
+
+@return
+
+@example
+
+@references
+
+@author
+
+\#' compute_NPV \### name of function
+
+\#' ###must leave one line blank
+
+\#' compute net present value \### description
+
+\#' @param value/cost (\$)
+
+\#' @param time in the future that cost/value occurs (years)
+
+\#' @param discount rate
+
+\#' @return value in \$
+
+Loading another package to find documentation:
+
+-   clone repo
+
+-   build: load all to find them
+
+-   help(functionname)

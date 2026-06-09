@@ -1,0 +1,23 @@
+---
+title: "6-assignment"
+format: html
+---
+
+```{r}
+library("devtools")
+install_github("emma-ras/solarvalue")
+devtools::load_all()
+help("annual_rev")
+
+```
+
+Tests
+
+
+Documentation using roxygen2 
+```{r}
+devtools::document()
+devtools::load_all()
+help("annual_rev")
+```
+
