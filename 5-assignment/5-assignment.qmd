@@ -162,10 +162,6 @@ Testing functions
 ```{r}
 test_dir("solarvalue_test") # files must start with test
 
-# Module 1 
-
-# Module 2
-
 # Module 3
 
 # Module 4

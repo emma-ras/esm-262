@@ -6,7 +6,7 @@ editor:
     wrap: 72
 ---
 
-# R Documentation 
+# R Documentation
 
 Use either package:
 

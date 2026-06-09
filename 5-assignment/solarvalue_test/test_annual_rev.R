@@ -1,22 +1,17 @@
-#' Annual Revenue Test
-#'
-#' Test if annual revenue is functioning correctly compute annual revenue from annual hourly price and annual hourly kwh production
-#' @describeIn Kwh data set should start at midnight, no sun for first 5 hours resulting in 0 produced kwh 
-#' @author Emma Rasmussen
-#' @export
+# Annual Revenue Test
 
-library(testthat)
-library(here)
-source(here("5-assignment/1_module.R"))
+# Test 1: Check input kwh starts at midnight & does not include night production
 
 test_that("annual_rev kwh input starts at midnight check",
           {
             expect_equal(solardf_clean$kwh[1:5], c(0,0,0,0,0))
           })
 
+# Test 2: Check input LMP data is correct magnitude 
+
 test_that("annual_rev lmp input per kwh magnitude",
           {
-            expect_true(solardf_clean$lmp < 10 ))
+            expect_true(all(solardf_clean$lmp < 10 ))
           })
 
 
