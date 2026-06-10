@@ -160,6 +160,7 @@ project_npv
 #### Testing functions
 
 ```{r}
+library(testthat)
 test_dir("solarvalue_test") # files must start with test
 
 
