@@ -157,7 +157,7 @@ project_npv
 
 ## Assignment 6 Additions
 
-Testing functions
+#### Testing functions
 
 ```{r}
 test_dir("solarvalue_test") # files must start with test
